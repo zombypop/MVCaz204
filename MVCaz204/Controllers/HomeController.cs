@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MVCaz204.Models;
+using MVCaz204.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,15 +13,18 @@ namespace MVCaz204.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly TareasService tareasService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, TareasService tareasService)
         {
             _logger = logger;
+            this.tareasService = tareasService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var tareas = tareasService.GetTareas();
+            return View(tareas);
         }
 
         public IActionResult Privacy()
